@@ -1,12 +1,41 @@
-interface Person {
-    firstName: string;
-    lastName: string;
+import axios, {
+    AxiosResponse,
+    AxiosError
+} from "../../node_modules/axios/index";
+
+interface IRecord {
+    title: string;
+    artist: string;
+    duration: number;
+    yearOfPublication: number;
+    album: string;
 }
 
-function greeter(person: Person): string {
-    return "Hello, " + person.firstName + " " + person.lastName;
-}
-let user: Person = { firstName: "John", lastName: "Doe" };
+let baseURI: string = "http://localhost:62959/api/Records";
 
-let element: HTMLDivElement = <HTMLDivElement> document.getElementById("content");
-element.innerHTML = greeter(user);
+let GetAllButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("getAllButton");
+GetAllButton.addEventListener("click", GetAll);
+
+function GetAll(): void {
+    let getAllOutputElement: HTMLDivElement = <HTMLDivElement>document.getElementById("getAllDivOutput");
+
+    axios.get<IRecord[]>(baseURI)
+        .then(function (response: AxiosResponse<IRecord[]>): void {
+            let result: string = "<ul id=recordList>";
+            response.data.forEach((record: IRecord) => {
+                result += "<li>" + record.title + " " + record.artist + " " + record.duration + " " + record.yearOfPublication + " " + record.album + "</li>";
+            });
+            result += "</ul>";
+            getAllOutputElement.innerHTML = result;
+        })
+        .catch(function (error: AxiosError): void {
+            if (error.response) {
+                getAllOutputElement.innerHTML = error.message;
+
+            }
+            else {
+                getAllOutputElement.innerHTML = error.message;
+            }
+        }
+        );
+}
