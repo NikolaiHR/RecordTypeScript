@@ -21,9 +21,9 @@ function GetAll(): void {
 
     axios.get<IRecord[]>(baseURI)
         .then(function (response: AxiosResponse<IRecord[]>): void {
-            let result: string = "<ul id=recordList>";
+            let result: string = "<ul class = 'list-group' id=recordList>";
             response.data.forEach((record: IRecord) => {
-                result += "<li>" + record.title + " " + record.artist + " " + record.duration + " " + record.yearOfPublication + " " + record.album + "</li>";
+                result += "<li class='list-group-item' >" + record.title + " " + record.artist + " " + record.duration + " " + record.yearOfPublication + " " + record.album + "</li>";
             });
             result += "</ul>";
             getAllOutputElement.innerHTML = result;
