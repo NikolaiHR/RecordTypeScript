@@ -8,7 +8,6 @@ interface IRecord {
     artist: string;
     duration: number;
     yearOfPublication: number;
-    album: string;
 }
 
 let baseURI: string = "http://localhost:62959/api/Records";
@@ -23,7 +22,7 @@ function GetAll(): void {
         .then(function (response: AxiosResponse<IRecord[]>): void {
             let result: string = "<ul class = 'list-group' id=recordList>";
             response.data.forEach((record: IRecord) => {
-                result += "<li class='list-group-item' >" + record.title + " " + record.artist + " " + record.duration + " " + record.yearOfPublication + " " + record.album + "</li>";
+                result += "<li class='list-group-item' >" + record.title + " " + record.artist + " " + record.duration + " " + record.yearOfPublication + "</li>";
             });
             result += "</ul>";
             getAllOutputElement.innerHTML = result;
